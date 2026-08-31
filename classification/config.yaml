@@ -1,0 +1,116 @@
+version: foldbeam_c_v1
+seed: 20260823
+
+paths:
+  project_root: .
+  openml_cache: data/openml_cache
+  raw_dir: data/raw_classify
+  processed_dir: data/processed_classify
+  factor_maps_dir: factor_maps
+  results_dir: results/classify
+  logs_dir: logs/classify
+  reports_dir: reports/classify
+  semantics_file: metadata/llego7_semantics.yaml
+
+data:
+  split_seeds: [0, 1, 2, 3, 4]
+  train_fraction: 0.36
+  validation_fraction: 0.24
+  test_fraction: 0.40
+  validation_fraction_of_remaining: 0.40
+  stratified: true
+
+graph:
+  budget_grid: [15, 20, 31]
+  beam_width: 5
+  max_rounds: 40
+  m_new: 2
+  shortlist_k: 3
+  shortlist_data: 1
+  shortlist_semantic: 2
+  n_probes: 4
+  quantiles: [0.20, 0.40, 0.60, 0.80]
+  min_new_parent: 8
+  min_reuse_support: 4
+  min_child_samples: 5
+  laplace_alpha: 1.0
+  laplace_alpha_grid: [0.5, 1.0, 2.0]
+  tau_sep: 0.30
+  data_weight_current: 0.2
+  data_weight_future: 0.8
+  support_offset: 2.0
+  p_max: 8
+  selection_metric: val
+  search_metric: logloss
+  final_selection_metric: balanced_accuracy
+  gain_metric: gini
+  threshold_grid: [0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70]
+  refinement:
+    enabled: true
+    mode: threshold
+    max_passes: 3
+    min_child: 5
+    quantiles: [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95]
+
+analysis:
+  bootstrap_reps: 10000
+  bootstrap_seed: 90210
+  primary_metric: balanced_accuracy
+
+datasets:
+  breast:
+    source: openml
+    openml_id: 15
+    expected_rows: 699
+    expected_features: 9
+    target: Class
+    positive_label: malignant
+    task: Predict whether a breast fine-needle aspirate is malignant rather than benign.
+  compas:
+    source: openml
+    openml_id: 42192
+    expected_rows: 5278
+    expected_features: 13
+    target: two_year_recid
+    positive_label: "1"
+    task: Predict whether a criminal defendant is arrested again within two years of release.
+  credit_g:
+    source: openml
+    openml_id: 31
+    expected_rows: 1000
+    expected_features: 20
+    target: class
+    positive_label: good
+    task: Predict whether a bank loan applicant is a good credit risk.
+  diabetes:
+    source: openml
+    openml_id: 37
+    expected_rows: 768
+    expected_features: 8
+    target: class
+    positive_label: tested_positive
+    task: Predict whether an adult Pima woman tests positive for type 2 diabetes.
+  heart_statlog:
+    source: openml
+    openml_id: 53
+    expected_rows: 270
+    expected_features: 13
+    target: class
+    positive_label: present
+    task: Predict whether a cardiology patient has angiographic heart disease.
+  liver:
+    source: openml
+    openml_id: 1480
+    expected_rows: 583
+    expected_features: 10
+    target: Class
+    positive_label: "1"
+    task: Predict whether a patient is a liver-disease patient from blood chemistry.
+  vehicle:
+    source: openml
+    openml_id: 994
+    expected_rows: 846
+    expected_features: 18
+    target: binaryClass
+    positive_label: P
+    task: Predict the binarised vehicle silhouette class from shape measurements.

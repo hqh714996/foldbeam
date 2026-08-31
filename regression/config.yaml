@@ -1,0 +1,89 @@
+version: foldbeam_r_llego_style_v3
+seed: 20260817
+
+paths:
+  project_root: .
+  openml_cache: data/openml_cache
+  raw_dir: data/raw_regression
+  processed_dir: data/processed_regression
+  factor_maps_dir: factor_maps
+  results_dir: results/regression
+  logs_dir: logs/regression
+  reports_dir: reports/regression
+  semantics_file: metadata/llego_r5_semantics.yaml
+
+data:
+  split_seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  train_fraction: 0.36
+  validation_fraction: 0.24
+  test_fraction: 0.40
+  validation_fraction_of_remaining: 0.40
+  target_strata: 10
+
+graph:
+  budget_grid: [15, 20, 31]
+  beam_width: 5
+  max_rounds: 40
+  m_new: 2
+  shortlist_k: 3
+  shortlist_data: 1
+  shortlist_semantic: 2
+  n_probes: 4
+  quantiles: [0.20, 0.40, 0.60, 0.80]
+  min_new_parent: 8
+  min_reuse_support: 4
+  min_child_samples: 5
+  terminal_lambda: 1.0
+  tau_sep: 0.30
+  data_weight_current: 0.2
+  data_weight_future: 0.8
+  support_offset: 2.0
+  p_max: 8
+  refinement:
+    enabled: true
+    mode: threshold
+    max_passes: 3
+    min_child: 5
+    quantiles: [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95]
+
+analysis:
+  bootstrap_reps: 10000
+  bootstrap_seed: 90210
+  primary_metric: mse
+
+datasets:
+  abalone:
+    source: openml
+    openml_id: 44956
+    expected_rows: 4177
+    expected_features: 8
+    target: Rings
+    task: Predict abalone age from physical measurements.
+  wine:
+    source: openml
+    openml_id: 287
+    expected_rows: 6497
+    expected_features: 11
+    target: quality
+    task: Predict wine quality from physicochemical measurements.
+  cholesterol:
+    source: openml
+    openml_id: 204
+    expected_rows: 303
+    expected_features: 13
+    target: chol
+    task: Predict serum cholesterol level from heart-disease patient attributes.
+  wage:
+    source: openml
+    openml_id: 534
+    expected_rows: 534
+    expected_features: 10
+    target: wage
+    task: Predict individual wages from Current Population Survey attributes.
+  cars:
+    source: openml
+    openml_id: 44994
+    expected_rows: 804
+    expected_features: 17
+    target: Price
+    task: Predict car price from vehicle characteristics.
