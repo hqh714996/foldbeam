@@ -1,0 +1,13 @@
+# caches & artifacts
+data/
+results/
+logs/
+reports/
+figures/
+factor_maps/
+__pycache__/
+*.pyc
+*.npz
+*.parquet
+*.pkl
+.env
